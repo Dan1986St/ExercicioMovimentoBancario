@@ -18,8 +18,15 @@ namespace WinFormsApp2
         {
             InitializeComponent();
 
+            
+
+
+
+
+
+
             //struct vs class
-            //Structs - bool int double float decimal char 
+            //Structs - bool int, double, float, decimal, char 
             //Pessoa douglas = new Pessoa();
             //douglas.Idade = 25;
 

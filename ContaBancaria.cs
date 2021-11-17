@@ -10,7 +10,7 @@ namespace WinFormsApp2
     class ContaBancaria
     {
         //Propriedades
-        public string NAgencia { get; private set; }
+        public string NAgencia { get; private set; } // get = leitura private set privado = ninguem pode alterar
         public string NConta { get; private set; }
 
         //Variáveis
@@ -73,6 +73,16 @@ namespace WinFormsApp2
             return resposta;
         }
 
+        public void Transferir(ContaBancaria contaAReceber, int quantia)
+        {
+            RespostaOperacaoBancaria respota = this.Sacar(quantia);
+            if (respota.Sucesso)
+            {
+                contaAReceber.Depositar(quantia);
+            }
+
+        }     
+
         private void AuditarOperacao(TipoOperacao tipo, double quantia)
         {
             AuditoriaBancaria auditoria = new AuditoriaBancaria();
@@ -90,7 +100,7 @@ namespace WinFormsApp2
         //Proxima aula -> StringBuilder + Foreach + LambdaExpressions
         public string LerExtrato(DateTime dataInicio, DateTime datafim)
         {
-            string extrato = "";
+            StringBuilder extrato = new StringBuilder();          //StringBuilder
 
             for (int i = 0; i < historico.Count; i++)
             {
@@ -98,20 +108,27 @@ namespace WinFormsApp2
                                    &&
                     historico[i].DataOperacao < datafim)
                 {
-                    extrato += historico[i].ToString() + "\r\n";
+                    extrato.AppendLine(historico[i].ToString());
                 }
             }
-            return extrato;
 
+            //foreach (AuditoriaBancaria item in historico) Comentar tudo Ctr+E+C
+            //{
+            //    if (item.DataOperacao > dataInicio
+            //                       &&
+            //        item.DataOperacao < datafim)
+            //    {
+            //        extrato.AppendLine(item.ToString());
+            //    }
+            //}
+
+            return extrato.ToString();
         }
-
-
 
         public string LerSaldo()
         {
-            return this.saldo.ToString("C2", new CultureInfo("pt-br"));
+            return this.saldo.ToString("C2", new CultureInfo("pt-br"));// formata um numero para a forma de moeda
         }
-
 
     }
 }
